@@ -13,10 +13,17 @@ api = Api(app)
 
 parser = reqparse.RequestParser()
 
-@app.after_request
-def set_csp_header(response):
-    response.headers['Content-Security-Policy'] = "connect-src http://127.0.0.1:5000 *.facebook.com facebook.com *.fbcdn.net *.facebook.net wss://*.facebook.com:* ws://localhost:* blob: *.instagram.com *.cdninstagram.com wss://*.instagram.com:* 'self' *.teststagram.com wss://edge-chat.instagram.com connect.facebook.net"
-    return response
+#@app.after_request
+#def set_csp_header(response):
+#    response.headers['Content-Security-Policy'] = "connect-src http://127.0.0.1:5000 *.facebook.com facebook.com *.fbcdn.net *.facebook.net wss://*.facebook.com:* ws://localhost:* blob: *.instagram.com *.cdninstagram.com wss://*.instagram.com:* 'self' *.teststagram.com wss://edge-chat.instagram.com connect.facebook.net"
+#    return response
+
+
+@app.route('/')
+def hello_world():
+    return 'Hello, World! Scam Checker API'
+
+
 
 class ScamChecker(Resource):
     def get(self):
@@ -70,7 +77,7 @@ api.add_resource(ScamChecker, '/scam/')
 
 
 if __name__ == "__main__":
-  app.run(debug=True)
+  app.run(debug=True, host='0.0.0.0')
 
 
 
