@@ -1,13 +1,19 @@
-# post request to http://127.0.0.1:5000/scam/ with comment_id and comment_text as parameters
-
 import requests
+import json
 
-url = "http://127.0.0.1:5000/scam/"
+# Set the API endpoint URLs
+detect_spam_url = "http://localhost:5000/detect-spam"
 
-payload = {'comment_id': '123456', 'comment_text': 'This is a test comment'}
-headers = {'Content-Type': 'application/json'}
+# Set the input text message
+message = "This is a test."
 
-response = requests.post(url, json=payload, headers=headers)
+# Define the data to be sent in the POST request
+data = {"message": message}
 
-print(response.status_code)
-print(response.text)
+print(message)
+
+# Send the POST request to the detect-spam endpoint
+response = requests.post(detect_spam_url, data=json.dumps(data), headers={"Content-Type": "application/json"})
+
+# Print the response from the server
+print(response.json())
