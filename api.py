@@ -5,7 +5,10 @@ from flask_cors import CORS
 import json
 import requests
 import torch
-from transformers import BertTokenizer, BertForSequenceClassification
+import torch.nn as nn
+
+from transformers import BertTokenizer, BertModel, BertForSequenceClassification
+from torch.utils.data import Dataset, DataLoader
 
 
 app = Flask(__name__)
@@ -18,15 +21,35 @@ parser = reqparse.RequestParser()
 device = 'cpu'
 
 # Set the maximum length of the messages
-max_len = 50
+max_len = 512
 
-# Load the saved model
-model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2, output_attentions=False, output_hidden_states=False)
-model.load_state_dict(torch.load('model/model.pt', map_location=torch.device('cpu')))
-model.eval()
+# define pretrained model name
+PRE_TRAINED_MODEL_NAME = 'bert-base-uncased'
 
 # Load the BERT tokenizer
-tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
+tokenizer = BertTokenizer.from_pretrained(PRE_TRAINED_MODEL_NAME, do_lower_case=True)
+
+class ScamClassifier(nn.Module):
+    def __init__(self, n_classes):
+        super(ScamClassifier, self).__init__()
+        self.bert = BertModel.from_pretrained(PRE_TRAINED_MODEL_NAME)
+        self.drop = nn.Dropout(p=0.3)
+        self.out = nn.Linear(self.bert.config.hidden_size, n_classes)
+    def forward(self, input_ids, attention_mask):
+        pooled_output = self.bert(
+            input_ids=input_ids,
+            attention_mask=attention_mask
+        )[1]
+        output = self.drop(pooled_output)
+        return self.out(output)
+
+
+# Load the saved model
+model = ScamClassifier(n_classes=2)
+#model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2, output_attentions=False, output_hidden_states=False)
+model.load_state_dict(torch.load('model/best_model_state.bin', map_location=torch.device('cpu'))) #, strict=False
+model.eval()
+
 
 
 
@@ -61,15 +84,16 @@ class ScamChecker(Resource):
         # Test the function with an example comment
         #comment_text = "SANTOS coin time follow today"
         prediction, probability = evaluate_comment(comment_text)
-        #print(f"Comment: {comment}")
-        #print(f"Prediction: {prediction}")
-        #print(f"Probability: {probability:.2f}")
+        print(f"Comment: {comment_text}")
+        print(f"Prediction: {prediction}")
+        print(f"Probability: {probability:.2f}")
         score = int(round(probability*100))
 
         # Access-Control-Allow-Origin
         response = make_response()
         response.headers['Access-Control-Allow-Origin'] = 'https://www.instagram.com'
 
+        #print(score, comment_text)
 
         return {"comment_id": comment_id, "score": score}, 201
 
