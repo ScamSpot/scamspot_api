@@ -27,7 +27,7 @@ model = ScamClassifier(n_classes=2)
 model = model.to(device)
 model.bert = BertModel.from_pretrained(PRE_TRAINED_MODEL_NAME, output_attentions=True, output_hidden_states=True)
 
-model.load_state_dict(torch.load("model_saved.pt", map_location=device))
+model.load_state_dict(torch.load("model/best_model_state.bin", map_location=device))
 tokenizer = BertTokenizer.from_pretrained(PRE_TRAINED_MODEL_NAME)
 model.to(device) # Add this line to move the model to the specified device
 
@@ -61,14 +61,19 @@ class ScamChecker(Resource):
 
         # Test the function with an example comment
         #comment = "Good reviews ofdaily from her techniques Almost €30,000 within the week payout on week days feels better @staci.elmafx"
-        
         comment = comment_text
-        predicted_class, confidence = predict_single_comment(model, tokenizer, comment)
-        print(f"Comment: {comment}")
-        print(f"Predicted class: {predicted_class}")
-        print(f"Confidence level: {confidence}")
-
-        score = int(round(confidence*100))
+        
+        testing_mode = False
+        
+        if testing_mode:
+            rating = 0.5
+        else:
+            predicted_class, rating = predict_single_comment(model, tokenizer, comment)
+            #print(f"Comment: {comment}")
+            #print(f"Predicted class: {predicted_class}")
+            #print(f"Confidence level: {confidence}")
+        
+        score = int(round(rating*100))
 
         # Access-Control-Allow-Origin
         response = make_response()
