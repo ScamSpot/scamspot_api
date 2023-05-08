@@ -2,11 +2,11 @@ import random
 from flask import Flask, make_response
 from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
-import json
-import requests
 import torch
 import torch.nn as nn
 
+import os.path
+import urllib.request
 from transformers import BertTokenizer, BertModel, BertForSequenceClassification
 from torch.utils.data import Dataset, DataLoader
 
@@ -18,6 +18,24 @@ CORS(app)
 
 api = Api(app)
 parser = reqparse.RequestParser()
+
+
+if os.path.isfile("model/best_model_state.bin"):
+    pass
+else:
+    url = 'https://ig-scam-model.fra1.cdn.digitaloceanspaces.com/best_model_state.bin'
+
+    local_filename = 'model/best_model_state.bin'
+    with urllib.request.urlopen(url) as response, open(local_filename, 'wb') as out_file:
+        print(f"Downloading {url} ...")
+        data_chunk = response.read(1024*1024)  # read and write data in 1MB chunks
+        while data_chunk:
+            out_file.write(data_chunk)
+            data_chunk = response.read(1024*1024)
+        print(f"Downloaded and saved {local_filename}")
+
+
+
 
 PRE_TRAINED_MODEL_NAME = 'bert-base-cased'
 
