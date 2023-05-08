@@ -1,6 +1,6 @@
 # model files (too big)
-model/*
-
+model/backup/*
+model/best_model_state.bin
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
