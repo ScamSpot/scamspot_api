@@ -1,23 +1,12 @@
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-from collections import defaultdict
-
-from sklearn.model_selection import train_test_split as tts
-from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_auc_score, f1_score, confusion_matrix
-
 import torch
 import torch.nn as nn
-import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
 
-from transformers import BertTokenizer, BertModel, AdamW, get_linear_schedule_with_warmup
+from transformers import BertModel
 
 import warnings
 warnings.filterwarnings('ignore')
 
-import math
 
 PRE_TRAINED_MODEL_NAME = 'bert-base-cased'
 MAX_LEN=512
