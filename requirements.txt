@@ -1,5 +1,7 @@
 Flask
 Flask-RESTful
-flask-cors
+flask-Cors
 requests
 gunicorn
+torch
+transformers

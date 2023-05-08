@@ -2,7 +2,7 @@ import requests
 import json
 
 # Set the API endpoint URLs
-detect_spam_url = "http://localhost:5000/detect-spam"
+detect_spam_url = "https://ig-scam-checker-obfcb.ondigitalocean.app/"
 
 # Set the input text message
 message = "This is a test."
