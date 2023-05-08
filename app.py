@@ -40,6 +40,7 @@ else:
 PRE_TRAINED_MODEL_NAME = 'bert-base-cased'
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(f"Using device: {device}")
 
 model = ScamClassifier(n_classes=2)
 model = model.to(device)

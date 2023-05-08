@@ -8,7 +8,7 @@ detect_spam_url = "https://ig-scam-checker-obfcb.ondigitalocean.app/"
 message = "This is a test."
 
 # Define the data to be sent in the POST request
-data = {"message": message}
+data = {"comment_id": 123, "comment_text": message}
 
 print(message)
 

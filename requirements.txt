@@ -3,5 +3,5 @@ Flask-RESTful
 flask-Cors
 requests
 gunicorn
-torch
 transformers
+torch==1.13.1
