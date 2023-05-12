@@ -92,7 +92,7 @@ class ScamChecker(Resource):
             #print(f"Predicted class: {predicted_class}")
             #print(f"Confidence level: {confidence}")
         
-        score = int(round(rating*100))
+        #score = int(round(rating*100))
 
         # Access-Control-Allow-Origin
         response = make_response()
@@ -100,7 +100,8 @@ class ScamChecker(Resource):
 
         #print(score, comment_text)
 
-        return {"comment_id": comment_id, "score": score}, 201
+        #return {"comment_id": comment_id, "score": score}, 201
+        return {"comment_id": comment_id, "class": predicted_class}, 201
 
 
 api.add_resource(ScamChecker, '/scam/')
