@@ -86,6 +86,7 @@ class ScamChecker(Resource):
         
         if testing_mode:
             rating = 0.5
+            predicted_class = "scam"
         else:
             predicted_class, rating = predict_single_comment(model, tokenizer, comment)
             #print(f"Comment: {comment}")
