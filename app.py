@@ -93,7 +93,7 @@ class ScamChecker(Resource):
             #print(f"Predicted class: {predicted_class}")
             #print(f"Confidence level: {confidence}")
         
-        #score = int(round(rating*100))
+        #score = int(round(rating*100)) #d
 
         # Access-Control-Allow-Origin
         response = make_response()
