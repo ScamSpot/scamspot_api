@@ -1,8 +1,13 @@
-# ig_spam_api
+# Instagram Scam Detection API
+The Instagram Scam Detection API provides a simple way to detect spam and scam comments on Instagram. Integrate the API into your application to enhance user safety and experience.
 
-docker image build -t docker-flask-test .
+## Related repositories
+- https://github.com/stefanerben/ig_scraper
+- https://github.com/stefanerben/ig_spam_ml_models
+- https://github.com/stefanerben/ig_spam_extension
 
-docker image ls
-docker run -p 5000:5000 -d docker-flask-test
-docker stop 8f2b67b836916f0ddb0f52d202a627a496642bddaf74d05ff0724620182794ea
-docker system prune
+## License
+The Instagram Scam Detection API is released under the MIT License. Feel free to use, modify, and distribute this extension in accordance with the terms of the license.
+
+## Contact
+If you have any questions, feedback, or inquiries, please contact me at stefan@erben.eu.

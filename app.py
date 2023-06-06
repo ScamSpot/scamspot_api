@@ -36,8 +36,6 @@ else:
         print(f"Downloaded and saved {local_filename}")
 
 
-
-
 PRE_TRAINED_MODEL_NAME = 'bert-base-cased'
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -52,8 +50,6 @@ tokenizer = BertTokenizer.from_pretrained(PRE_TRAINED_MODEL_NAME)
 model.to(device) # Add this line to move the model to the specified device
 
 
-
-
 @app.after_request
 def set_csp_header(response):
     response.headers['Content-Security-Policy'] = "connect-src http://127.0.0.1:5000 *.facebook.com facebook.com *.fbcdn.net *.facebook.net wss://*.facebook.com:* ws://localhost:* blob: *.instagram.com *.cdninstagram.com wss://*.instagram.com:* 'self' *.teststagram.com wss://edge-chat.instagram.com connect.facebook.net"
@@ -62,7 +58,6 @@ def set_csp_header(response):
 @app.route('/')
 def hello_world():
     return 'Hello, World! Scam Checker API'
-
 
 class ScamChecker(Resource):
     def get(self):
@@ -78,9 +73,6 @@ class ScamChecker(Resource):
 
         comment_id = args["comment_id"]
         comment_text = args["comment_text"]
-
-        # Test the function with an example comment
-        #comment = "Good reviews ofdaily from her techniques Almost €30,000 within the week payout on week days feels better @staci.elmafx"
         comment = comment_text
         
         testing_mode = False
@@ -90,11 +82,6 @@ class ScamChecker(Resource):
             predicted_class = "scam"
         else:
             predicted_class, rating = predict_single_comment(model, tokenizer, comment)
-            #print(f"Comment: {comment}")
-            #print(f"Predicted class: {predicted_class}")
-            #print(f"Confidence level: {confidence}")
-        
-        #score = int(round(rating*100)) #d
 
         # Access-Control-Allow-Origin
         response = make_response()
