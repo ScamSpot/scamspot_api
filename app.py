@@ -19,16 +19,17 @@ CORS(app)
 api = Api(app)
 parser = reqparse.RequestParser()
 
-
-if os.path.isfile("model/best_model_state.bin"):
+local_filename = 'model/best_model_state.bin'
+if os.path.isfile(local_filename):
     pass
 else:
     url = 'https://ig-scam-model.fra1.cdn.digitaloceanspaces.com/best_model_state.bin'
 
-    local_filename = 'model/best_model_state.bin'
     with urllib.request.urlopen(url) as response, open(local_filename, 'wb') as out_file:
         print(f"Downloading {url} ...")
-        data_chunk = response.read(1024*1024)  # read and write data in 1MB chunks
+        
+        # read and write data in 1MB chunks
+        data_chunk = response.read(1024*1024)
         while data_chunk:
             out_file.write(data_chunk)
             data_chunk = response.read(1024*1024)
@@ -68,7 +69,7 @@ class ScamChecker(Resource):
         response = make_response()
         response.headers['Access-Control-Allow-Origin'] = 'https://www.instagram.com'
 
-        return {"message": "Hello, World!"}, 200
+        return {"message": "API active!"}, 200
 
     def post(self):
         parser.add_argument("comment_id", type=str, required=True, help="comment_id is required")
