@@ -1,4 +1,4 @@
-# Instagram Scam Detection API
+# ScamSpot API
 The Instagram Scam Detection API provides a simple way to detect spam and scam comments on Instagram. Integrate the API into your application to enhance user safety and experience.
 
 ## Related repositories
