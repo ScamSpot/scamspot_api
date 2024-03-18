@@ -23,7 +23,7 @@ local_filename = 'model/best_model_state.bin'
 if os.path.isfile(local_filename):
     pass
 else:
-    url = 'https://ig-scam-model.fra1.cdn.digitaloceanspaces.com/best_model_state.bin'
+    url = 'https://scamspot-model.fra1.cdn.digitaloceanspaces.com/best_model_state.bin'
 
     with urllib.request.urlopen(url) as response, open(local_filename, 'wb') as out_file:
         print(f"Downloading {url} ...")
