@@ -57,14 +57,14 @@ def set_csp_header(response):
 
 @app.route('/')
 def hello_world():
-    return 'Hello, World! Scam Checker API'
+    return 'Hello, World! SpamSpot API'
 
 class ScamChecker(Resource):
     def get(self):
         response = make_response()
         response.headers['Access-Control-Allow-Origin'] = 'https://www.instagram.com'
 
-        return {"message": "API active!"}, 200
+        return {"message": "API active, please use POST!"}, 200
 
     def post(self):
         parser.add_argument("comment_id", type=str, required=True, help="comment_id is required")
