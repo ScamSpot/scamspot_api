@@ -55,10 +55,6 @@ def set_csp_header(response):
     response.headers['Content-Security-Policy'] = "connect-src http://127.0.0.1:5000 *.facebook.com facebook.com *.fbcdn.net *.facebook.net wss://*.facebook.com:* ws://localhost:* blob: *.instagram.com *.cdninstagram.com wss://*.instagram.com:* 'self' *.teststagram.com wss://edge-chat.instagram.com connect.facebook.net"
     return response
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World! SpamSpot API'
-
 class ScamChecker(Resource):
     def get(self):
         response = make_response()
@@ -92,8 +88,12 @@ class ScamChecker(Resource):
         #return {"comment_id": comment_id, "score": score}, 201
         return {"comment_id": comment_id, "class": predicted_class}, 201
 
-
 api.add_resource(ScamChecker, '/scam/')
+
+
+@app.route('/')
+def hello_world():
+    return 'Hello, World! SpamSpot API'
 
 
 if __name__ == "__main__":
